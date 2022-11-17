@@ -27,12 +27,12 @@ import "./Board.css";
  *
  **/
 
-function Board({ nrows, ncols, chanceLightStartsOn }) {
+function Board({ nrows=3, ncols=3, chanceLightStartsOn=0.25 }) {
   const [board, setBoard] = useState(createBoard());
 
+  console.log("BOARD WITH", board);
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
-    let initialBoard = [];
 
     return Array.from(
       {length: nrows},
@@ -66,6 +66,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
    *  the cardinal directions
    */
   function flipCellsAround(coord) {
+    console.log(`flipCellsAround(${coord})`);
     setBoard(oldBoard => {
       const [y, x] = coord.split("-").map(Number); // sample input '1-2', then y=1, x=2
 
@@ -82,6 +83,10 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
 
       // in the copy, flip this cell and the cells around it
       flipCell(y, x, boardCopy); //boardCopy mutated in place
+      flipCell(y+1, x, boardCopy); //boardCopy mutated in place
+      flipCell(y-1, x, boardCopy); //boardCopy mutated in place
+      flipCell(y, x+1, boardCopy); //boardCopy mutated in place
+      flipCell(y, x-1, boardCopy); //boardCopy mutated in place
 
       // return the copy
       return boardCopy;
@@ -97,15 +102,28 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   // TODO
 
   return (
-    <div>
-      {
-      false
-      ? <div>You have won the game!</div>
-      : board.map(
-        (row, y) => row.map(
-          (cell, x) => <Cell isLit={board[y][x]} flipCellsAroundMe={() => flipCellsAround(`${y}-${x}`)} />
-          )
-        )
+    <div className="Board">
+      {hasWon(board)
+        ? <div>You have won the game!</div>
+        :
+        <table>
+          <tbody>
+            {board.map((row, y) => {
+              return (<tr key={`${y}`}>
+                {row.map((cell, x) => {
+                  return (
+                  <Cell
+                    key={`${y}-${x}`}
+                    isLit={board[y][x]}
+                    flipCellsAroundMe={() => {
+                      return flipCellsAround(`${y}-${x}`)}
+                    }/>
+                  )
+                })}
+              </tr>)
+            })}
+          </tbody>
+        </table>
       }
     </div>
   )
