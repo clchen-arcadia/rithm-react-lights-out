@@ -14,10 +14,10 @@ Tutorial of how to play: https://www.logicgamesonline.com/lightsout/tutorial.htm
 
 ![Playing lights out](images/screenshot1.png)
 
-1. Almost won...
+2. Almost won...
 
 ![Almost won the game](images/screenshot2.png)
 
-1. Game end!
+3. Game end!
 
 ![You won the game!](images/screenshot3.png)
