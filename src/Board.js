@@ -27,7 +27,7 @@ import "./Board.css";
  *
  **/
 
-function Board({ nrows=3, ncols=3, chanceLightStartsOn=0.25 }) {
+function Board({ nrows=5, ncols=5, chanceLightStartsOn=0.25 }) {
   const [board, setBoard] = useState(createBoard());
 
   console.log("BOARD WITH", board);
@@ -79,7 +79,8 @@ function Board({ nrows=3, ncols=3, chanceLightStartsOn=0.25 }) {
       };
 
       // Make a (deep) copy of the oldBoard
-      const boardCopy = [...oldBoard];
+      const boardCopy = oldBoard.map(row => [...row]);
+
 
       // in the copy, flip this cell and the cells around it
       flipCell(y, x, boardCopy); //boardCopy mutated in place
